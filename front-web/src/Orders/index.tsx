@@ -23,7 +23,9 @@ function Orders() {
   useEffect(() => {
     fetchProducts()
       .then(response => setProducts(response.data))
-      .catch(error => console.log(error))
+      .catch(error => {
+        toast.warning('Erro ao listar produtos');
+      })
   }, []);
 
   const handleSelectProduct = (product: Product) => {
@@ -44,8 +46,8 @@ function Orders() {
       products: productsIds
     }
 
-    saveOrder(payload).then(() => {
-      toast.error('Pedido enviado com sucesso!');
+    saveOrder(payload).then((response) => {
+      toast.error(`Pedido enviado com sucesso! Nº ${response.data.id}`);
       setSelectedProducts([]);
     })
       .catch(() => {
